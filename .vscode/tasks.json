@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build and Run Full Stack",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"Write-Host 'Starting Order Management System...'; Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd \"${workspaceFolder}\\order-service\"; Write-Host \"Starting Spring Boot Backend...\"; mvn spring-boot:run' -WindowStyle Normal; Start-Sleep 3; Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd \"${workspaceFolder}\\order-ui\"; Write-Host \"Installing dependencies...\"; npm install; Write-Host \"Starting React Frontend...\"; npm start' -WindowStyle Normal"
+			],
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start React Frontend",
+			"type": "shell",
+			"command": "npm",
+			"args": ["start"],
+			"options": {
+				"cwd": "${workspaceFolder}/order-ui"
+			},
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
