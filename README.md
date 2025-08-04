@@ -1,152 +1,150 @@
-# Real-Time Order Management System
+# 🚀 Order Management System
 
-A full-stack Order Management System built with Spring Boot (Java) backend and React.js frontend, integrated with AWS services for cloud storage and notifications.
+> A modern, full-stack order management application built with React.js and Spring Boot, featuring AWS cloud integration and a beautiful, responsive UI.
+
+![Order Management System](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB?logo=react)
+![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot%203.2-6DB33F?logo=springboot)
+![AWS](https://img.shields.io/badge/Cloud-AWS%20Services-FF9900?logo=amazonaws)
+![Tailwind](https://img.shields.io/badge/Styling-Tailwind%20CSS-38B2AC?logo=tailwindcss)
+
+## ✨ Features
+
+### 🎨 **Modern UI/UX**
+- **Gradient Design**: Beautiful blue-to-purple gradient themes throughout
+- **Responsive Layout**: Mobile-first design with Tailwind CSS
+- **Interactive Elements**: Hover animations and smooth transitions
+- **Professional Cards**: Modern card layouts with backdrop blur effects
+- **Real-time Feedback**: Toast notifications and loading states
+
+### 🔧 **Core Functionality**
+- **Order Management**: Create, read, and track orders efficiently
+- **File Upload**: PDF invoice upload with validation
+- **Dashboard Analytics**: Real-time stats with total orders, revenue, and averages
+- **Search & Filter**: Easy order lookup and management
+- **RESTful API**: Clean, well-documented API endpoints
+
+### ☁️ **AWS Cloud Integration**
+- **DynamoDB**: NoSQL database for scalable order storage
+- **S3 Storage**: Secure file storage for invoice PDFs
+- **SNS Notifications**: Automated order notifications
+- **IAM Security**: Proper access controls and permissions
 
 ## 🏗️ Architecture
 
-- **Frontend**: React.js with Tailwind CSS
-- **Backend**: Spring Boot (Java 17)
-- **Database**: AWS DynamoDB
-- **File Storage**: AWS S3
-- **Notifications**: AWS SNS
-- **CI/CD**: GitHub Actions
-- **Documentation**: Swagger UI/OpenAPI
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│                 │    │                 │    │                 │
+│   React.js      │◄──►│  Spring Boot    │◄──►│  AWS Services   │
+│   Frontend      │    │   Backend       │    │                 │
+│                 │    │                 │    │                 │
+│ • Tailwind CSS │    │ • RESTful API   │    │ • DynamoDB      │
+│ • Axios HTTP   │    │ • Spring Data   │    │ • S3 Storage    │
+│ • React Router │    │ • AWS SDK v2    │    │ • SNS Messaging │
+│ • Toast UI     │    │ • JUnit Tests   │    │ • IAM Security  │
+│                 │    │                 │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
-## 📋 Features
-
-### Backend (Spring Boot)
-- RESTful API endpoints for order management
-- AWS DynamoDB integration for data persistence
-- AWS S3 integration for invoice file storage
-- AWS SNS integration for order notifications
-- Swagger UI for API documentation
-- Input validation and error handling
-- CORS configuration for frontend integration
-
-### Frontend (React.js)
-- Responsive dashboard displaying all orders
-- Create order form with file upload
-- Order detail view with invoice download
-- Toast notifications for user feedback
-- Clean and modern UI with Tailwind CSS
-- Client-side routing with React Router
-
-### AWS Integration
-- **DynamoDB**: Stores order data with partition key on orderId
-- **S3**: Stores invoice PDF files and returns accessible URLs
-- **SNS**: Publishes notifications when new orders are created
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Java 17 or higher
-- Node.js 18 or higher
-- AWS CLI configured with appropriate credentials
-- Maven 3.6 or higher
+- **Node.js** 16+ and npm
+- **Java** 17+ and Maven
+- **AWS Account** (for cloud features)
+- **Git** for version control
 
-### AWS Setup
-
-1. **Create DynamoDB Table**
-   ```bash
-   aws dynamodb create-table \
-     --table-name Orders \
-     --attribute-definitions AttributeName=orderId,AttributeType=S \
-     --key-schema AttributeName=orderId,KeyType=HASH \
-     --billing-mode PAY_PER_REQUEST \
-     --region us-east-1
-   ```
-
-2. **Create S3 Bucket**
-   ```bash
-   aws s3 mb s3://your-order-management-bucket --region us-east-1
-   ```
-
-3. **Create SNS Topic**
-   ```bash
-   aws sns create-topic --name order-notifications --region us-east-1
-   ```
-
-4. **Subscribe to SNS Topic** (Optional - for email notifications)
-   ```bash
-   aws sns subscribe \
-     --topic-arn arn:aws:sns:us-east-1:your-account:order-notifications \
-     --protocol email \
-     --notification-endpoint your-email@example.com
-   ```
-
-### Local Development
-
-#### Backend Setup
-1. Navigate to the backend directory:
-   ```bash
-   cd order-service
-   ```
-
-2. Update `application.properties` with your AWS configuration:
-   ```properties
-   aws.region=us-east-1
-   aws.dynamodb.orders-table=Orders
-   aws.s3.bucket-name=your-order-management-bucket
-   aws.sns.topic-arn=arn:aws:sns:us-east-1:your-account:order-notifications
-   ```
-
-3. Run the Spring Boot application:
-   ```bash
-   mvn spring-boot:run
-   ```
-
-The backend will start on `http://localhost:8080`
-
-#### Frontend Setup
-1. Navigate to the frontend directory:
-   ```bash
-   cd order-ui
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm start
-   ```
-
-The frontend will start on `http://localhost:3000`
-
-## 📡 API Reference
-
-### Base URL
+### 1. Clone Repository
+```bash
+git clone https://github.com/yourusername/order-management-system.git
+cd order-management-system
 ```
-http://localhost:8080
+
+### 2. Backend Setup (Spring Boot)
+```bash
+cd order-service
+mvn clean install
+mvn spring-boot:run
 ```
+Backend runs on: `http://localhost:8080`
+
+### 3. Frontend Setup (React)
+```bash
+cd order-ui
+npm install
+npm start
+```
+Frontend runs on: `http://localhost:3000`
+
+### 4. Mock Backend (Alternative)
+For quick testing without Java/Maven:
+```bash
+cd mock-backend
+npm install
+npm start
+```
+Mock backend runs on: `http://localhost:8081`
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **React 18** - Modern UI library with hooks
+- **Tailwind CSS** - Utility-first CSS framework
+- **React Router v6** - Client-side routing
+- **Axios** - HTTP client for API calls
+- **React Toastify** - Beautiful notifications
+
+### Backend
+- **Spring Boot 3.2** - Enterprise Java framework
+- **Spring Data** - Data access abstraction
+- **AWS SDK v2** - Cloud service integration
+- **Maven** - Dependency management
+- **JUnit 5** - Testing framework
+
+### Cloud Services
+- **AWS DynamoDB** - NoSQL database
+- **AWS S3** - Object storage
+- **AWS SNS** - Push notifications
+- **AWS IAM** - Identity and access management
+
+## 🔧 API Documentation
 
 ### Endpoints
 
-#### Create Order
-```http
-POST /orders
-Content-Type: multipart/form-data
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/orders` | Retrieve all orders |
+| `POST` | `/orders` | Create new order |
+| `GET` | `/orders/{id}` | Get order by ID |
 
-Parameters:
-- customerName (string, required): Name of the customer
-- orderAmount (number, required): Order amount in USD
-- invoiceFile (file, optional): PDF invoice file
+### Example API Call
+```javascript
+// Create new order
+const response = await fetch('/orders', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+  body: formData
+});
 ```
 
-#### Get All Orders
-```http
-GET /orders
-```
+## 🏃‍♂️ Development
 
-#### Get Order by ID
-```http
-GET /orders/{orderId}
+### Project Structure
 ```
-
-### API Documentation
-Access the interactive API documentation at: `http://localhost:8080/swagger-ui.html`
+order-management-system/
+├── order-service/          # Spring Boot backend
+│   ├── src/main/java/      # Java source code
+│   ├── src/main/resources/ # Configuration files
+│   └── pom.xml            # Maven dependencies
+├── order-ui/              # React frontend
+│   ├── src/components/    # React components
+│   ├── src/services/      # API services
+│   └── package.json       # npm dependencies
+├── mock-backend/          # Node.js mock server
+└── .github/               # GitHub workflows
+```
 
 ## 🧪 Testing
 
@@ -164,102 +162,48 @@ npm test
 
 ## 🚀 Deployment
 
-### GitHub Actions CI/CD
-The project includes automated CI/CD pipeline using GitHub Actions:
-
-1. **Test Stage**: Runs tests for both backend and frontend
-2. **Build Stage**: Builds both applications
-3. **Deploy Stage**: Deploys to AWS (Elastic Beanstalk for backend, S3 for frontend)
-
-### Required GitHub Secrets
-Configure the following secrets in your GitHub repository:
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `AWS_REGION`
-- `S3_BUCKET_NAME`
-- `CLOUDFRONT_DISTRIBUTION_ID` (if using CloudFront)
-
-### Manual Deployment
-
-#### Backend to AWS Elastic Beanstalk
-```bash
-cd order-service
-mvn clean package
-eb init -p java-17 order-management-backend
-eb create order-management-env
-eb deploy
-```
-
-#### Frontend to AWS S3
-```bash
-cd order-ui
-npm run build
-aws s3 sync build/ s3://your-frontend-bucket --delete
-```
-
-## 🛠️ Development
-
-### Project Structure
-```
-├── order-service/          # Spring Boot backend
-│   ├── src/main/java/
-│   │   └── com/orderms/orderservice/
-│   │       ├── config/     # AWS configuration
-│   │       ├── controller/ # REST controllers
-│   │       ├── model/      # Entity models
-│   │       ├── repository/ # Data access layer
-│   │       └── service/    # Business logic
-│   └── src/main/resources/
-│       └── application.properties
-├── order-ui/              # React.js frontend
-│   ├── public/
-│   └── src/
-│       ├── components/     # React components
-│       └── services/       # API services
-└── .github/workflows/     # CI/CD pipeline
-```
-
-### Adding Features
-1. **Backend**: Add new endpoints in controllers, business logic in services
-2. **Frontend**: Create new components and update routing
-3. **AWS**: Update AWS configurations as needed
-
-## 🔧 Configuration
-
-### Environment Variables
-Create `.env` files for local development:
-
-**Backend** (`order-service/src/main/resources/application-local.properties`):
-```properties
-aws.region=us-east-1
-aws.dynamodb.orders-table=Orders-Dev
-aws.s3.bucket-name=your-dev-bucket
-aws.sns.topic-arn=arn:aws:sns:us-east-1:account:dev-notifications
-```
-
-**Frontend** (`order-ui/.env.local`):
-```
-REACT_APP_API_URL=http://localhost:8080
-```
-
-## 📊 Monitoring and Logging
-
-- **Backend**: Uses Spring Boot Actuator for health checks
-- **AWS**: CloudWatch for monitoring DynamoDB, S3, and SNS
-- **Frontend**: Console logging and error boundaries
+### Using GitHub Actions
+The project includes CI/CD pipeline configuration:
+- Automated testing on pull requests
+- Build and deployment to AWS
+- Environment-specific configurations
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## 📋 Features Roadmap
+
+- [ ] **User Authentication** - JWT-based auth system
+- [ ] **Order Status Tracking** - Real-time status updates
+- [ ] **Email Notifications** - Automated email alerts
+- [ ] **Advanced Analytics** - Charts and reporting
+- [ ] **Multi-tenant Support** - Organization management
+- [ ] **Mobile App** - React Native companion app
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙋‍♂️ Support
+## 👨‍💻 Author
 
-For support, email your-email@example.com or create an issue in this repository.
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+- Portfolio: [your-portfolio.com](https://your-portfolio.com)
+
+## 🙏 Acknowledgments
+
+- Built for internship application demonstration
+- Inspired by modern e-commerce platforms
+- Thanks to the React and Spring Boot communities
+
+---
+
+<div align="center">
+  <strong>⭐ Star this repository if you found it helpful!</strong>
+</div>
