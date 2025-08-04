@@ -8,6 +8,7 @@ const CreateOrder = () => {
   const [formData, setFormData] = useState({
     customerName: '',
     orderAmount: '',
+    orderStatus: 'pending',
     invoiceFile: null
   });
   const [loading, setLoading] = useState(false);
@@ -162,6 +163,39 @@ const CreateOrder = () => {
                     placeholder="0.00"
                     required
                   />
+                </div>
+              </div>
+
+              {/* Order Status */}
+              <div className="space-y-3">
+                <label htmlFor="orderStatus" className="block text-sm font-bold text-gray-700 uppercase tracking-wider">
+                  Order Status *
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg className="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <select
+                    id="orderStatus"
+                    name="orderStatus"
+                    value={formData.orderStatus}
+                    onChange={handleInputChange}
+                    className="w-full pl-14 pr-4 py-5 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-300 text-lg font-medium bg-gradient-to-r from-gray-50 to-white hover:border-gray-300 hover:shadow-lg appearance-none cursor-pointer"
+                    required
+                  >
+                    <option value="pending">🟡 Pending</option>
+                    <option value="processing">🔵 Processing</option>
+                    <option value="shipped">🟠 Shipped</option>
+                    <option value="delivered">🟢 Delivered</option>
+                    <option value="cancelled">🔴 Cancelled</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
 

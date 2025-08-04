@@ -16,6 +16,7 @@ export const orderService = {
     const formData = new FormData();
     formData.append('customerName', orderData.customerName);
     formData.append('orderAmount', orderData.orderAmount);
+    formData.append('orderStatus', orderData.orderStatus || 'pending');
     if (orderData.invoiceFile) {
       formData.append('invoiceFile', orderData.invoiceFile);
     }
@@ -37,6 +38,12 @@ export const orderService = {
   // Get order by ID
   getOrderById: async (orderId) => {
     const response = await api.get(`/orders/${orderId}`);
+    return response.data;
+  },
+
+  // Update order status
+  updateOrderStatus: async (orderId, status) => {
+    const response = await api.put(`/orders/${orderId}/status`, { status });
     return response.data;
   },
 };

@@ -54,7 +54,7 @@ if (!fs.existsSync('uploads')){
 // Create a new order
 app.post('/orders', upload.single('invoiceFile'), (req, res) => {
   try {
-    const { customerName, orderAmount } = req.body;
+    const { customerName, orderAmount, orderStatus } = req.body;
     
     // Validation
     if (!customerName || !orderAmount) {
@@ -65,10 +65,17 @@ app.post('/orders', upload.single('invoiceFile'), (req, res) => {
       return res.status(400).json({ error: 'Order amount must be a positive number' });
     }
 
+    // Valid order statuses
+    const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    const status = orderStatus && validStatuses.includes(orderStatus.toLowerCase()) 
+      ? orderStatus.toLowerCase() 
+      : 'pending';
+
     const order = {
       orderId: uuidv4(),
       customerName: customerName.trim(),
       orderAmount: parseFloat(orderAmount),
+      orderStatus: status,
       orderDate: new Date().toISOString(),
       invoiceFileUrl: req.file ? `http://localhost:${PORT}/uploads/${req.file.filename}` : null
     };
@@ -81,6 +88,7 @@ app.post('/orders', upload.single('invoiceFile'), (req, res) => {
     console.log(`Order ID: ${order.orderId}`);
     console.log(`Customer: ${order.customerName}`);
     console.log(`Amount: $${order.orderAmount.toFixed(2)}`);
+    console.log(`Status: ${order.orderStatus.toUpperCase()}`);
     console.log('==============================');
 
     res.status(201).json(order);
@@ -102,6 +110,40 @@ app.get('/orders/:id', (req, res) => {
     return res.status(404).json({ error: 'Order not found' });
   }
   res.json(order);
+});
+
+// Update order status
+app.put('/orders/:id/status', (req, res) => {
+  try {
+    const { status } = req.body;
+    const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    
+    if (!status || !validStatuses.includes(status.toLowerCase())) {
+      return res.status(400).json({ 
+        error: 'Invalid status. Valid statuses are: ' + validStatuses.join(', ') 
+      });
+    }
+
+    const orderIndex = orders.findIndex(o => o.orderId === req.params.id);
+    if (orderIndex === -1) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    orders[orderIndex].orderStatus = status.toLowerCase();
+    
+    // Mock SNS notification for status update
+    console.log('=== MOCK SNS NOTIFICATION ===');
+    console.log('Order Status Updated!');
+    console.log(`Order ID: ${orders[orderIndex].orderId}`);
+    console.log(`Customer: ${orders[orderIndex].customerName}`);
+    console.log(`New Status: ${status.toUpperCase()}`);
+    console.log('==============================');
+
+    res.json(orders[orderIndex]);
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    res.status(500).json({ error: 'Failed to update order status' });
+  }
 });
 
 // Serve uploaded files

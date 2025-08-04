@@ -48,6 +48,25 @@ const Dashboard = () => {
     return `${id.substring(0, 8)}...${id.substring(id.length - 4)}`;
   };
 
+  const getStatusBadge = (status) => {
+    const statusConfig = {
+      pending: { bg: 'bg-yellow-100', text: 'text-yellow-800', border: 'border-yellow-200', emoji: '🟡', label: 'Pending' },
+      processing: { bg: 'bg-blue-100', text: 'text-blue-800', border: 'border-blue-200', emoji: '🔵', label: 'Processing' },
+      shipped: { bg: 'bg-orange-100', text: 'text-orange-800', border: 'border-orange-200', emoji: '🟠', label: 'Shipped' },
+      delivered: { bg: 'bg-green-100', text: 'text-green-800', border: 'border-green-200', emoji: '🟢', label: 'Delivered' },
+      cancelled: { bg: 'bg-red-100', text: 'text-red-800', border: 'border-red-200', emoji: '🔴', label: 'Cancelled' }
+    };
+
+    const config = statusConfig[status] || statusConfig.pending;
+    
+    return (
+      <span className={`inline-flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-semibold ${config.bg} ${config.text} ${config.border} border shadow-sm`}>
+        <span className="text-base">{config.emoji}</span>
+        <span>{config.label}</span>
+      </span>
+    );
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -116,7 +135,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="relative group bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 rounded-3xl shadow-2xl p-8 text-white transform hover:scale-105 transition-all duration-500 overflow-hidden border border-blue-400/20">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12 group-hover:scale-125 transition-transform duration-700"></div>
@@ -167,6 +186,25 @@ const Dashboard = () => {
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110">
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative group bg-gradient-to-br from-pink-500 via-rose-600 to-pink-700 rounded-3xl shadow-2xl p-8 text-white transform hover:scale-105 transition-all duration-500 overflow-hidden border border-pink-400/20">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12 group-hover:scale-125 transition-transform duration-700"></div>
+          <div className="flex items-center justify-between relative z-10">
+            <div>
+              <p className="text-pink-100 text-sm font-semibold uppercase tracking-wider mb-2">Active Orders</p>
+              <p className="text-4xl font-extrabold mb-1">
+                {orders.filter(order => ['pending', 'processing', 'shipped'].includes(order.orderStatus || 'pending')).length}
+              </p>
+              <p className="text-pink-200 text-xs font-medium">Orders in progress</p>
+            </div>
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110">
+              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
           </div>
@@ -233,6 +271,9 @@ const Dashboard = () => {
                     Amount
                   </th>
                   <th className="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                     Date
                   </th>
                   <th className="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
@@ -261,6 +302,9 @@ const Dashboard = () => {
                       <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
                         {formatAmount(order.orderAmount)}
                       </span>
+                    </td>
+                    <td className="px-8 py-6 whitespace-nowrap">
+                      {getStatusBadge(order.orderStatus || 'pending')}
                     </td>
                     <td className="px-8 py-6 whitespace-nowrap text-sm text-gray-600 font-medium">
                       {formatDate(order.orderDate)}
