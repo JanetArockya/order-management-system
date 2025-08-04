@@ -56,7 +56,7 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/yourusername/order-management-system.git
+git clone https://github.com/JanetArockya/order-management-system.git
 cd order-management-system
 ```
 
@@ -191,10 +191,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
+**Janet Arockya**
+- GitHub: [@JanetArockya](https://github.com/JanetArockya)
+- LinkedIn: [Connect with me](https://linkedin.com/in/janetarockya)
+- Email: [Get in touch](mailto:janetarockya@example.com)
 
 ## 🙏 Acknowledgments
 
